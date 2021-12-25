@@ -10,6 +10,17 @@
 
 ![image](https://user-images.githubusercontent.com/14030986/147385914-d738ab93-3346-46ed-9bfe-ff8e4b1ffa92.png)
 
+## Common Operations
+Let's establish a protocol for queues:
+
+    public protocol Queue {
+        associatedtype Element
+        mutating func enqueue(_ element: Element) -> Bool
+        mutating func dequeue() -> Element?
+        var isEmpty: Bool { get }
+        var peek: Element? { get }
+    }
+
 ## Array-Based Queue
 There are multiple ways to implement Queues in Swift. One of them is by leveraging Array. 
 ![image](https://user-images.githubusercontent.com/14030986/147387761-d88aa323-0479-4697-bfaa-42166852c579.png)

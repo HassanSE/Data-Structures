@@ -30,3 +30,24 @@ public struct QueueArray<T>: Queue {
         isEmpty ? nil : array.removeFirst()
     }
 }
+
+// Removing an element from the front of the queue is an O(n) operation. To dequeue,
+// you remove the element from the beginning of the array. This is always a linear-time
+// operation because it requires all the remaining elements in the array to be shifted in
+// memory.
+
+extension QueueArray: CustomStringConvertible {
+    public var description: String {
+        String(describing: array)
+    }
+}
+
+var queue = QueueArray<String>()
+queue.enqueue("Ray")
+queue.enqueue("Brian")
+queue.enqueue("Eric")
+queue
+queue.dequeue()
+queue
+queue.peek
+queue

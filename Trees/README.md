@@ -13,3 +13,14 @@ A tree is made up of nodes. Each node can carry some data and keeps track of its
 Trees are viewed starting from the top and branching towards the bottom, just like a real tree, only upside-down. Every node (except for the topmost one) connects to exactly one node above it. That node is called a **parent** node. The nodes directly below and connected to it are called its **child** nodes. In a tree, every child has exactly one parent. That's what make a tree, well, a tree.
 ![image](https://user-images.githubusercontent.com/14030986/147379299-79b4dc3a-e604-4a5c-9551-a8fd72bae658.png)
 
+## Root
+- The topmost node in a tree is called the root of the tree
+- It is the only node that has no parent:
+![image](https://user-images.githubusercontent.com/14030986/147379518-ce1ff8b1-50af-4eea-b23b-08a9bf023a26.png)
+
+## Leaf
+- A node is a leaf if it has no children:
+![image](https://user-images.githubusercontent.com/14030986/147379533-9d5a45f0-fff9-4ba2-8e61-53b89e2933e3.png)
+
+
+

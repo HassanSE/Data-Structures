@@ -69,11 +69,6 @@ cold.addChild(milk)
 soda.addChild(gingerAle)
 soda.addChild(bitterLemon)
 
-func doesContainChildren<T: Equatable>(in tree: Tree<T>, child1: T, child2: T) -> Bool {
-    tree.children.contains(where: { $0.value == child1 }) &&
-    tree.children.contains(where: { $0.value == child2 })
-}
-
 func findCommonAncestor<T: Equatable>(tree: Tree<T>, child1: Tree<T>, child2: Tree<T>) -> Tree<T>? {
     var ancestor: Tree<T>? = nil
     if child1.parent == child2.parent {

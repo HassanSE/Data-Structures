@@ -31,3 +31,8 @@ would probably just use an array.
 There are multiple ways to implement Queues in Swift. One of them is by leveraging Array. 
 ![image](https://user-images.githubusercontent.com/14030986/147387761-d88aa323-0479-4697-bfaa-42166852c579.png)
 
+- There are some shortcomings to the array-based implementation
+- Removing an item from the front of the queue can be inefficient, as removal causes all elements to shift up by one. 
+- This makes a difference for very large queues. Once the array gets full, it has to resize and may have unused space. 
+- This could increase your memory footprint over time.
+

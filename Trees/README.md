@@ -22,5 +22,8 @@ Trees are viewed starting from the top and branching towards the bottom, just li
 - A node is a leaf if it has no children:
 ![image](https://user-images.githubusercontent.com/14030986/147379533-9d5a45f0-fff9-4ba2-8e61-53b89e2933e3.png)
 
+## Traversal algorithms
+Travering through a tree is relatively complicated as compared to linear collections. Depending on the problem at hand, there are different traversal algorithms available to traverse through a tree.
 
-
+### Depth First Search (DFS)
+A technique that starts at the root and visits nodes as deep as it can before backtracking.

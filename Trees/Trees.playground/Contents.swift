@@ -12,9 +12,21 @@ public class Tree<T> {
 }
 
 extension Tree {
-    func performDepthFirstSearch(visit: (Tree) -> Void) {
+    public func performDepthFirstSearch(visit: (Tree) -> Void) {
         visit(self)
         children.forEach { $0.performDepthFirstSearch(visit: visit) }
+    }
+}
+
+extension Tree {
+    public func performBreadthFirstSearch(visit: (Tree) -> Void) {
+        visit(self)
+        var queue = QueueArray<Tree>()
+        children.forEach { queue.enqueue($0) }
+        while let node = queue.dequeue() {
+            visit(node)
+            node.children.forEach { queue.enqueue($0) }
+        }
     }
 }
 
@@ -67,4 +79,9 @@ func makeBeverageTree() -> Tree<String> {
 example(of: "Depth first traversal") {
     let tree = makeBeverageTree()
     tree.performDepthFirstSearch { print($0.value) }
+}
+
+example(of: "Breadth first traversal") {
+    let tree = makeBeverageTree()
+    tree.performBreadthFirstSearch { print($0.value) }
 }

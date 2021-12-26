@@ -85,3 +85,16 @@ example(of: "Breadth first traversal") {
     let tree = makeBeverageTree()
     tree.performBreadthFirstSearch { print($0.value) }
 }
+
+extension Tree where T: Equatable {
+    public func search(_ value: T) -> Tree? {
+        var result: Tree?
+        performBreadthFirstSearch { node in
+            if node.value == value {
+                result = node
+            }
+        }
+        return result
+    }
+}
+

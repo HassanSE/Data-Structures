@@ -1,81 +1,15 @@
-public class Tree<T> {
-    var value: T
-    var children: [Tree<T>] = []
-    var parent: Tree<T>?
-    var visits = 0
-    
-    public init(_ value: T) {
-        self.value = value
-    }
-    
-    public func addChild(_ child: Tree<T>) {
-        children.append(child)
-        child.parent = self
-    }
-}
+import Foundation
 
-extension Tree {
-    func performDepthFirstSearch(visit: (Tree) -> Void) {
-        visit(self)
-        children.forEach { $0.performDepthFirstSearch(visit: visit) }
-    }
-}
-
-extension Tree: Equatable where T: Equatable {
-    public static func == (lhs: Tree<T>, rhs: Tree<T>) -> Bool {
-        lhs.value == rhs.value &&
-        lhs.children == rhs.children
-    }
-}
-let tree = Tree<String>("Beverages")
-
-let hot = Tree("Hot")
-let cold = Tree("Cold")
-
-let tea = Tree("Tea")
-let coffee = Tree("Coffee")
-let chocolate = Tree("Cocoa")
-
-let blackTea = Tree("Black Tea")
-let greenTea = Tree("Green Tea")
-let chaiTea = Tree("Chai Tea")
-
-let latte = Tree("Latte")
-let cappuccino = Tree("Cappuccino")
-
-let soda = Tree("Soda")
-let milk = Tree("Milk")
-
-let gingerAle = Tree("Ginger Ale")
-let bitterLemon = Tree("Bitter Lemon")
-
-tree.addChild(hot)
-tree.addChild(cold)
-
-hot.addChild(tea)
-hot.addChild(coffee)
-hot.addChild(chocolate)
-
-tea.addChild(blackTea)
-tea.addChild(greenTea)
-tea.addChild(chaiTea)
-
-coffee.addChild(latte)
-coffee.addChild(cappuccino)
-
-cold.addChild(soda)
-cold.addChild(milk)
-
-soda.addChild(gingerAle)
-soda.addChild(bitterLemon)
-
-func findCommonAncestor<T: Equatable>(tree: Tree<T>, child1: Tree<T>, child2: Tree<T>) -> Tree<T>? {
+func findCommonAncestor<T: Equatable>(tree: Tree<T>, node1: Tree<T>, node2: Tree<T>) -> Tree<T>? {
     var ancestor: Tree<T>? = nil
-    if child1.parent == child2.parent {
-        return child1.parent
+    if node1 == tree || node2 == tree {
+        return nil
     }
-    var parent1 = child1.parent
-    var parent2 = child2.parent
+    if node1.parent == node2.parent {
+        return node1.parent
+    }
+    var parent1 = node1.parent
+    var parent2 = node2.parent
     while parent1 != parent2 {
         if parent1?.visits == 1  {
             ancestor = parent1
@@ -94,18 +28,23 @@ func findCommonAncestor<T: Equatable>(tree: Tree<T>, child1: Tree<T>, child2: Tr
     return ancestor
 }
 
-//var commonAncestor = findCommonAncestor(tree: tree, child1: blackTea, child2: greenTea)
-//print(commonAncestor!.value)
-//assert(commonAncestor == tea)
-//
-//var commonAncestor2 = findCommonAncestor(tree: tree, child1: latte, child2: chaiTea)
-//print(commonAncestor2!.value)
-//assert(commonAncestor2 == hot)
-//
-//var commonAncestor3 = findCommonAncestor(tree: tree, child1: gingerAle, child2: hot)
-//print(commonAncestor3!.value)
-//assert(commonAncestor3 == tree)
+func verify_lowestCommonAncestor(tree: Tree<String>, child1: String, child2: String, lca: String?) {
+    let node1 = tree.search(child1)!
+    let node2 = tree.search(child2)!
+    let commonAncestor = findCommonAncestor(tree: tree, node1: node1, node2: node2)
+    commonAncestor.map { print("Common ancestor of \(child1) and \(child2) is: \($0.value)") }
+    assert(commonAncestor?.value == lca)
+}
 
-var commonAncestor4 = findCommonAncestor(tree: tree, child1: bitterLemon, child2: milk)
-print(commonAncestor4!.value)
-assert(commonAncestor4 == cold)
+func test_lowestCommonAncestor_shouldReturnLowCommonParentInTree() {
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Latte", child2: "Hot", lca: "Beverages")
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Ginger Ale", child2: "Cappuccino", lca: "Beverages")
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Black Tea", child2: "Coffee", lca: "Hot")
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Milk", child2: "Cold", lca: "Beverages")
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Cappuccino", child2: "Chai Tea", lca: "Hot")
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Cappuccino", child2: "Bitter Lemon", lca: "Beverages")
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Hot", child2: "Beverages", lca: nil)
+    verify_lowestCommonAncestor(tree: makeBeverageTree(), child1: "Green Tea", child2: "Cocoa", lca: "Hot")
+}
+
+test_lowestCommonAncestor_shouldReturnLowCommonParentInTree()
